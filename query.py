@@ -1,49 +1,55 @@
+import os
 import requests
 import pandas as pd
-import os
+from dotenv import load_dotenv
 
-url1 = "https://graph.facebook.com/v19.0/"+os.environ.get('ID_DA_PAGINA')
-params1 = {
-    'fields': 'access_token',
-    'access_token': '[[TOKEN USUÁRIO]]'
-}
-response1 = requests.get(url1, params=params1)
-access_token = response1.json()['access_token']
+# Carrega as variáveis de ambiente do arquivo .env
+load_dotenv()
 
-url2 = "https://graph.facebook.com/v19.0/"+os.environ.get('ID_DA_PAGINA')
-params2 = {
-    'fields': 'access_token,leadgen_forms{leads}',
-    'access_token': access_token
-}
-response2 = requests.get(url2, params=params2)
+def get_access_token():
+    url = f"https://graph.facebook.com/v19.0/{os.getenv('ID_DA_PAGINA')}"
+    params = {
+        'fields': 'access_token',
+        'access_token': os.getenv('TOKEN_USUARIO')
+    }
+    response = requests.get(url, params=params)
+    response.raise_for_status()
+    return response.json()['access_token']
 
-print(response2.json())
+# Restante do código...
 
-response_data = response2.json()
 
-leads = response_data.get('leadgen_forms', {}).get('data', [])
+def get_lead_data(access_token):
+    url = f"https://graph.facebook.com/v19.0/{os.environ.get('ID_DA_PAGINA')}"
+    params = {
+        'fields': 'access_token,leadgen_forms{leads}',
+        'access_token': access_token
+    }
+    response = requests.get(url, params=params)
+    response.raise_for_status()
+    return response.json()
 
-full_names = []
-emails = []
-phone_numbers = []
+def extract_lead_data(response_data):
+    leads = response_data.get('leadgen_forms', {}).get('data', [])
+    extracted_data = []
+    for lead in leads:
+        lead_data = lead.get('leads', {}).get('data', [])
+        for data in lead_data:
+            if 'field_data' in data:
+                lead_dict = {item['name']: item['values'][0] for item in data['field_data']}
+                extracted_data.append({
+                    'full_name': lead_dict.get('full_name', None),
+                    'email': lead_dict.get('email', None),
+                    'phone_number': lead_dict.get('phone_number', None)
+                })
+    return extracted_data
 
-for lead in leads:
-    lead_data = lead.get('leads', {}).get('data', [])
-    for data in lead_data:
-        if 'field_data' in data:
-            lead_dict = {item['name']: item['values'][0] for item in data['field_data']}
-            full_names.append(lead_dict.get('full_name', None))
-            emails.append(lead_dict.get('email', None))
-            phone_numbers.append(lead_dict.get('phone_number', None))
-        else:
-            full_names.append(None)
-            emails.append(None)
-            phone_numbers.append(None)
+def main():
+    access_token = get_access_token()
+    response_data = get_lead_data(access_token)
+    extracted_data = extract_lead_data(response_data)
+    df = pd.DataFrame(extracted_data)
+    print(df.head())
 
-df = pd.DataFrame({
-    'full_name': full_names,
-    'email': emails,
-    'phone_number': phone_numbers
-})
-
-df.head()
+if __name__ == "__main__":
+    main()
