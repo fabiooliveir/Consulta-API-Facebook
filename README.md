@@ -1,31 +1,27 @@
 # Facebook Leads API
 
-Este repositório contém um notebook em Python que demonstra como extrair leads dos formulários de geração de leads da página do Facebook utilizando a API do Facebook.
+Este projeto integra-se com a API do Facebook para obter dados de formulários de leads.
 
-## Como usar
+## Instalação
 
-1. Clone este repositório:
+1. Clone o repositório.
+2. Instale as dependências com `pip install -r requirements.txt`.
 
-   ```bash
-   git clone https://github.com/seu-usuario/facebook-leads-api.git
-   ```
+## Uso
 
-2. Instale as dependências necessárias:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Abra o notebook `Consulta_API_de_Cadastros.ipynb` no Google Colab ou Jupyter Notebook.
-
-4. Siga as instruções no notebook para obter o Access Token da sua página do Facebook e extrair os leads dos formulários de geração de leads.
-
-## Requisitos
-
-- Python 3
-- Bibliotecas Python: requests, pandas
+1. Configure as variáveis de ambiente no arquivo `.env`.
+2. Execute o script `query.py` para obter os dados dos formulários de leads.
 
 ## Contribuição
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir um pull request ou relatar um problema.
+Sinta-se à vontade para contribuir com melhorias neste projeto. Basta seguir estas etapas:
 
+1. Faça um fork do projeto.
+2. Crie uma branch para sua feature (`git checkout -b feature/NomeDaFeature`).
+3. Faça commit de suas alterações (`git commit -am 'Adicionando nova feature'`).
+4. Faça push para a branch (`git push origin feature/NomeDaFeature`).
+5. Crie um novo Pull Request.
+
+## Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
