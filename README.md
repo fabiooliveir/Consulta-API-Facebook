@@ -1,27 +1,13 @@
-# Facebook Leads API
+## Consultas na API do Facebook
 
-Este projeto integra-se com a API do Facebook para obter dados de formulários de leads.
+Este projeto apresenta exemplos de consultas na API do Facebook utilizando Python. Cada arquivo neste repositório representa um tipo de consulta diferente. Abaixo estão os detalhes de cada consulta:
 
-## Instalação
+### Consulta de Estatísticas de Anúncios
 
-1. Clone o repositório.
-2. Instale as dependências com `pip install -r requirements.txt`.
+O arquivo `get_ads_insights.py` demonstra como realizar uma consulta para obter estatísticas de anúncios, como impressões, gastos e ações. Para executar este arquivo, é necessário configurar as variáveis de ambiente no arquivo `.env` com as credenciais necessárias (ACCESS_TOKEN, AD_ACCOUNT_ID, APP_SECRET, APP_ID).
 
-## Uso
+### Consulta de Dados de Leads
 
-1. Configure as variáveis de ambiente no arquivo `.env`.
-2. Execute o script `query.py` para obter os dados dos formulários de leads.
+O arquivo `get_lead_data.py` mostra como fazer uma consulta para obter dados de leads de formulários do Facebook. Este arquivo utiliza a função `get_access_token()` para obter o token de acesso necessário e, em seguida, faz uma chamada à API para obter os dados de leads. Os dados são então extraídos e exibidos em um DataFrame do Pandas.
 
-## Contribuição
-
-Sinta-se à vontade para contribuir com melhorias neste projeto. Basta seguir estas etapas:
-
-1. Faça um fork do projeto.
-2. Crie uma branch para sua feature (`git checkout -b feature/NomeDaFeature`).
-3. Faça commit de suas alterações (`git commit -am 'Adicionando nova feature'`).
-4. Faça push para a branch (`git push origin feature/NomeDaFeature`).
-5. Crie um novo Pull Request.
-
-## Licença
-
-Este projeto está licenciado sob a [MIT License](LICENSE).
+Para executar qualquer um dos arquivos, é necessário instalar as dependências listadas no arquivo `requirements.txt` e configurar as variáveis de ambiente no arquivo `.env`.
